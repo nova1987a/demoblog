@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+
+<!-- some idea for overriding title , refer to https://www.forgepackages.com/guides/page-titles/ 
+	{% block title %} Local balajan library {% endblock %} -->
+
+{% block content %}
+<!--h1>Local Blog Home</h1-->
+<p>Welcome to simple Blog, a website develop by <em>Balajan</em></p>
+
+<h3 class="alert alert-info">Dynamic content</h3>
+<p>The BLOG has following records counts:</p>
+<ul>
+	<li><strong>Blogs:</strong> {{ num_blogs }}</li>
+	<li><strong>Authors:</strong> {{ num_bloggers }}</li>
+</ul>
+<p>You've visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+{% endblock %}
+

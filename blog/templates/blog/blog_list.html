@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h1>Blog List</h1>
+{% if blog_list %}
+<ul>
+	{% for blog in blog_list %}
+	<li>
+		<p>{{blog.title}}</p>
+		<a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a> ({{ blog.blogger }})
+	</li>
+	{% endfor %}
+</ul>
+{% else %}
+<p> There's no any blog here.</p>
+{% endif %}
+{% endblock %}

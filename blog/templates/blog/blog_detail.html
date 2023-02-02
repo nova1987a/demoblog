@@ -1,0 +1,51 @@
+{% extends "base_generic.html" %}
+<!--{% block title %} Local balajan library -- Book detai {% endblock %}-->
+<div class="container">
+	<div class="row">
+		<div class="col-8 card mb-4 mt-3 left top">
+			{% block content %}
+			<div class="card-body">
+				<h1>Title: {{ blog.title }}</h1>
+				<h2 class="badge rounded-pill bg-info text-dark"><strong>Blogger:</strong><a href="{% url 'blogger-detail' blog.blogger.pk %}">{{ blog.blogger }}</a></h2>
+				<p><strong>Content--</strong></p>
+				<!--img src="{{ blog.cover.url }}" class="rounded" alt="{{blog.title}}"-->
+				<p>{{ blog.content }}</p>
+				<p class="badge bg-secondary"><strong>Tag:</strong>{% for tag in blog.tag.all %} {{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+				<!-- Comment area -->	
+				<div class="card-body">
+					{% if user.is_authenticated %}
+					<form method="POST" class="form-group">
+						{% csrf_token %}
+						{{ comment_form }}
+						<p><button class="btn btn-info" type="submit">Add comment <i class="fas fa-comments"</i></button></p>
+					</form>
+					{% else %}
+					<p><a class="btn btn-outline-info" href="{%url 'login'%}?next={{request.path}}">Log in to add a comment.</a></p>
+					{%endif%}
+
+					{% if comments %}
+					<strong class="text-secondary">{{ object.number_of_comments }} Comment {{ object.number_of_comments|pluralize }} </strong>
+					<hr>
+					<ul>
+						{% for comment in comments %}
+						<li>
+							<div>
+								<span>
+									<strong class="text-info">{{ comment.author }} </strong>
+									<small class="text-muted">{{ comment.created_date }} </small>
+								</span>
+								<p> {{ comment.comment|safe }}</p>
+							</div>
+						</li>
+						{% endfor %}
+					</ul>
+					{% else %}
+					<strong class="text-secondary">No comment yet.... </strong>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
